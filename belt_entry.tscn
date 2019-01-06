@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://sokoban_tilesheet.png" type="Texture" id=1]
+[ext_resource path="res://belt_entry.gd" type="Script" id=2]
+
+[node name="belt_entry" type="Sprite"]
+
+z_index = 10
+texture = ExtResource( 1 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 704, 64, 64, 64 )
+script = ExtResource( 2 )
+_sections_unfolded = [ "Offset", "Region", "Z Index" ]
+
+

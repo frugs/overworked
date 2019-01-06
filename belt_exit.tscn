@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://sokoban_tilesheet.png" type="Texture" id=1]
+[ext_resource path="res://belt_exit.gd" type="Script" id=2]
+
+[node name="belt_exit" type="Sprite"]
+
+z_index = 10
+texture = ExtResource( 1 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 704, 0, 64, 64 )
+script = ExtResource( 2 )
+_sections_unfolded = [ "Offset", "Pause", "Region", "Z Index" ]
+
+
