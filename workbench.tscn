@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://sokoban_tilesheet.png" type="Texture" id=1]
+[ext_resource path="res://workbench.gd" type="Script" id=1]
+[ext_resource path="res://sokoban_tilesheet.png" type="Texture" id=2]
 
 [node name="workbench" type="StaticBody2D" index="0"]
 
@@ -11,6 +12,8 @@ constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
+script = ExtResource( 1 )
+_sections_unfolded = [ "Pause" ]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="0"]
 
@@ -20,7 +23,7 @@ polygon = PoolVector2Array( 0, 0, 0, 64, 64, 64, 64, 0 )
 [node name="Sprite" type="Sprite" parent="." index="1"]
 
 z_index = -5
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 384, 256, 64, 64 )

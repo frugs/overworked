@@ -8,5 +8,5 @@ func interact_with(player):
         player.carried_item = null
     
         _global.score += item.score_value    
-        item.get_parent().remove_child(player.carried_item)
+        item.get_parent().remove_child(item)
         item.queue_free()

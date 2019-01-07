@@ -69,13 +69,14 @@ func _process(delta):
     _face_direction_of_input()
     
     if Input.is_action_just_pressed("ui_accept"):
-        var intersect_offset = Vector2(32, 32) + _facing * CELL_SIZE
-        var intersect_pos = global_position + intersect_offset
-        var results = get_world_2d().direct_space_state.intersect_point(intersect_pos)
+        var results = get_world_2d().direct_space_state.intersect_point(interaction_point())
         for result in results:
            if result.collider.has_method("interact_with"):
                 result.collider.interact_with(self)
 
 func _physics_process(delta):
     move_and_slide(_move_direction * MOTION_SPEED)
-    
+
+func interaction_point():
+    var intersect_offset = Vector2(32, 48) + _facing * CELL_SIZE * 0.75
+    return global_position + intersect_offset
