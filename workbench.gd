@@ -1,16 +1,19 @@
 extends StaticBody2D
 
-var contents = null
+const Inventory = preload("res://inventory.gd")
+
+var inventory = Inventory.new(self)
 
 func interact_with(player, items):
-    if player.carried_item != null:
-        var item = player.carried_item
-        player.carried_item = null
+    if not player.inventory.is_empty() and inventory.is_empty():
+        player.inventory.give_item(player.inventory.front(), inventory)
+                
+    elif player.inventory.is_empty() and not inventory.is_empty():
+        inventory.give_item(inventory.front(), player.inventory)
         
-        item.get_parent().remove_child(item)        
-        item.position = Vector2()
-        add_child(item)
-    else:
-        for item in items:
-            item.give_to(player)
-            break
+func acquire_item(item):
+    item.position = Vector2()
+    add_child(item)
+        
+func release_item(item):
+    remove_child(item)

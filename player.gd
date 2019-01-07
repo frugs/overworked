@@ -3,12 +3,14 @@ extends KinematicBody2D
 const MOTION_SPEED = 256.0
 const CELL_SIZE = 64
 
-var carried_item = null
+const Inventory = preload("res://inventory.gd")
+
+var inventory = Inventory.new(self)
 
 var _move_direction = Vector2()
 var _facing = Vector2(0, 1)
 var _idle_anim_name = "idle_down"
-var _action_stack = [] 
+var _action_stack = []
 
 onready var _animation_player = get_node("animation_player")
 
@@ -75,7 +77,7 @@ func _do_interact():
     for result in results:
         if result.collider.has_method("interact_with"):
             machines.push_back(result.collider)
-        elif result.collider.has_method("give_to"):
+        elif "score_value" in result.collider:
             items.push_back(result.collider)
     
     if machines.size() > 0:             
@@ -89,3 +91,10 @@ func _process(delta):
 
 func _physics_process(delta):
     move_and_slide(_move_direction * MOTION_SPEED)
+    
+func release_item(item):
+    remove_child(item)
+    
+func acquire_item(item):
+    item.position = Vector2()
+    add_child(item)

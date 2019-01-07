@@ -5,7 +5,7 @@
 [ext_resource path="res://belt_body.gd" type="Script" id=3]
 [ext_resource path="res://sokoban_tilesheet.png" type="Texture" id=4]
 
-[node name="belt" type="Node2D"]
+[node name="belt" type="Node2D" index="0"]
 
 [node name="belt_exit" parent="." index="0" instance=ExtResource( 1 )]
 
