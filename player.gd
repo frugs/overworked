@@ -64,19 +64,28 @@ func _face_direction_of_input():
     if no_input:
         _move_direction = Vector2()
         _animation_player.play(_idle_anim_name)
+
+func _do_interact():
+    var intersect_offset = Vector2(32, 48) + _facing * CELL_SIZE * 0.75
+    var interaction_point = global_position + intersect_offset
+    var results = get_world_2d().direct_space_state.intersect_point(interaction_point)
+    
+    var machines = []
+    var items = []
+    for result in results:
+        if result.collider.has_method("interact_with"):
+            machines.push_back(result.collider)
+        elif result.collider.has_method("give_to"):
+            items.push_back(result.collider)
+    
+    if machines.size() > 0:             
+        machines[0].interact_with(self, items)
     
 func _process(delta):
     _face_direction_of_input()
     
     if Input.is_action_just_pressed("ui_accept"):
-        var results = get_world_2d().direct_space_state.intersect_point(interaction_point())
-        for result in results:
-           if result.collider.has_method("interact_with"):
-                result.collider.interact_with(self)
+        _do_interact()
 
 func _physics_process(delta):
     move_and_slide(_move_direction * MOTION_SPEED)
-
-func interaction_point():
-    var intersect_offset = Vector2(32, 48) + _facing * CELL_SIZE * 0.75
-    return global_position + intersect_offset

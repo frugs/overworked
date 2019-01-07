@@ -2,7 +2,7 @@ extends StaticBody2D
 
 onready var _global = get_node("/root/global")
 
-func interact_with(player):
+func interact_with(player, items):
     if not player.carried_item == null:
         var item = player.carried_item
         player.carried_item = null
