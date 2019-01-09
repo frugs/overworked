@@ -66,8 +66,8 @@ func _face_direction_of_input():
     if no_input:
         _move_direction = Vector2()
         _animation_player.play(_idle_anim_name)
-
-func _do_interact():
+        
+func _find_entities_in_front_of_player():
     var intersect_offset = Vector2(32, 48) + _facing * CELL_SIZE * 0.75
     var interaction_point = global_position + intersect_offset
     var results = get_world_2d().direct_space_state.intersect_point(interaction_point)
@@ -80,14 +80,26 @@ func _do_interact():
         elif "score_value" in result.collider:
             items.push_back(result.collider)
     
-    if machines.size() > 0:             
-        machines[0].interact_with(self, items)
+    return {machines: machines, items: items}
+
+func _do_interact():
+    var entities = _find_entities_in_front_of_player()
+
+    if not entities.empty():             
+        entities.machines[0].interact_with(self, entities.items)
+        
+func _do_operate():
+    var entities = _find_entities_in_front_of_player()
+    if not entities.empty() and entities.machines[0].has_method("operate"):
+        entities.machines[0].operate(player)
     
 func _process(delta):
     _face_direction_of_input()
     
-    if Input.is_action_just_pressed("ui_accept"):
+    if Input.is_action_just_pressed("game_interact"):
         _do_interact()
+    elif Input.is_action_pressed("game_operate"):
+        _do_operate()
 
 func _physics_process(delta):
     move_and_slide(_move_direction * MOTION_SPEED)
