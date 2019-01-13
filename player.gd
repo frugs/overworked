@@ -80,7 +80,7 @@ func _find_entities_in_front_of_player():
         elif "score_value" in result.collider:
             items.push_back(result.collider)
     
-    return {machines: machines, items: items}
+    return {"machines": machines, "items": items}
 
 func _do_interact():
     var entities = _find_entities_in_front_of_player()
@@ -91,7 +91,7 @@ func _do_interact():
 func _do_operate():
     var entities = _find_entities_in_front_of_player()
     if not entities.empty() and entities.machines[0].has_method("operate"):
-        entities.machines[0].operate(player)
+       entities.machines[0].operate(self)
     
 func _process(delta):
     _face_direction_of_input()
